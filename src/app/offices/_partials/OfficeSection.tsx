@@ -1,4 +1,4 @@
-import { Stack, StackProps, Text, Wrap } from '@chakra-ui/react';
+import { Stack, StackProps, Text, Wrap, Avatar } from '@chakra-ui/react';
 
 import { useCurrentUser } from '@/app/auth/useAuth';
 import { EmptyItem, PersonTag } from '@/components';
@@ -33,7 +33,7 @@ export const OfficeSection: React.FC<OfficeSectionProps> = ({
         <Text
           fontWeight="bold"
           _groupHover={{
-            color: 'yellow.500',
+            color: 'brand.500',
             textDecoration: 'underline',
           }}
         >
@@ -56,10 +56,16 @@ export const OfficeSection: React.FC<OfficeSectionProps> = ({
               <PersonTag
                 bg={
                   username === person?.name
-                    ? 'yellow.500'
+                    ? 'brand.500'
                     : colorModeValue('gray.400', 'gray.300')
                 }
               >
+                <Avatar
+                  style={{ marginRight: '5px' }}
+                  size="2xs"
+                  name={person?.name}
+                  src={person?.photoUrl}
+                />
                 {person?.name}
               </PersonTag>
             ))}

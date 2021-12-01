@@ -8,15 +8,17 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  useDisclosure,
   Wrap,
 } from '@chakra-ui/react';
 import { FiPlus } from 'react-icons/fi';
 
 import { useCurrentUser } from '@/app/auth/useAuth';
 import { Loader, Page, PageContent } from '@/app/layout';
-import { Icon, PersonTag, PopoverInput } from '@/components';
+import { FormModal, Icon, PersonTag } from '@/components';
 import { useDarkMode } from '@/hooks/useDarkMode';
 
+import { OfficeForm } from './_partials/OfficeForm';
 import { OfficeSection } from './_partials/OfficeSection';
 import {
   useAddPersonOnOffice,
@@ -32,6 +34,12 @@ export const PageOffices = () => {
   const currentUser = useCurrentUser();
 
   const weekdays = ['LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI'];
+
+  const {
+    isOpen: isOpenAddOfficeModal,
+    onOpen: onOpenAddOfficeModal,
+    onClose: onCloseAddOfficeModal,
+  } = useDisclosure();
 
   const { mutate: addOffice } = useOfficeAdd();
   const {
@@ -53,6 +61,7 @@ export const PageOffices = () => {
     }
   ) => {
     const person = {
+      photoUrl: currentUser?.photoURL,
       name: currentUser?.username,
       ...(params || {}),
     };
@@ -62,7 +71,8 @@ export const PageOffices = () => {
           officeWorker?.name === currentUser.username &&
           params &&
           officeWorker?.onMorning === params?.onMorning &&
-          officeWorker?.onAfternoon === params?.onAfternoon
+          officeWorker?.onAfternoon === params?.onAfternoon &&
+          officeWorker?.photoUrl === currentUser.photoURL
       )
     ) {
       removePersonOnOffice({ person, day, officeId: office?.id });
@@ -80,17 +90,13 @@ export const PageOffices = () => {
           <Center flex="1">
             <Stack spacing={4}>
               <Text fontWeight="medium">Aucun bureau n'est créé</Text>
-              <PopoverInput
-                onSubmit={(value) => addOffice({ name: value, presence: {} })}
-                label="Nom"
-                submitLabel="Ajouter un bureau"
-                placeholder="Saisir le nom du bureau"
-                placement="right-end"
+              <Button
+                variant="@primary"
+                size="sm"
+                onClick={onOpenAddOfficeModal}
               >
-                <Button variant="@primary" size="sm">
-                  <Icon icon={FiPlus} mr={1} /> Ajouter un bureau
-                </Button>
-              </PopoverInput>
+                <Icon icon={FiPlus} mr={1} /> Ajouter un bureau
+              </Button>
             </Stack>
           </Center>
         )}
@@ -109,17 +115,9 @@ export const PageOffices = () => {
                 </PersonTag>
               ))}
               <Box minW="10rem">
-                <PopoverInput
-                  onSubmit={(value) => addOffice({ name: value, presence: {} })}
-                  label="Nom"
-                  submitLabel="Ajouter un bureau"
-                  placeholder="Saisir le nom du bureau"
-                  placement="right-end"
-                >
-                  <Button variant="link" size="xs">
-                    <Icon icon={FiPlus} mr={1} /> Ajouter un bureau
-                  </Button>
-                </PopoverInput>
+                <Button variant="link" size="xs" onClick={onOpenAddOfficeModal}>
+                  <Icon icon={FiPlus} mr={1} /> Ajouter un bureau
+                </Button>
               </Box>
             </Wrap>
             <Stack spacing={6}>
@@ -128,7 +126,7 @@ export const PageOffices = () => {
                   <Text
                     fontSize="lg"
                     fontWeight="bold"
-                    color="yellow.500"
+                    color="brand.500"
                     alignSelf="center"
                   >
                     {weekday}
@@ -209,6 +207,13 @@ export const PageOffices = () => {
           </Stack>
         )}
       </PageContent>
+      <FormModal
+        isOpen={isOpenAddOfficeModal}
+        onClose={onCloseAddOfficeModal}
+        onSubmit={addOffice}
+      >
+        <OfficeForm />
+      </FormModal>
     </Page>
   );
 };

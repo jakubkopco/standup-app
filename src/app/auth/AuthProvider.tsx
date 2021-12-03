@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isLogged, setIsLogged] = useState(true);
 
   firebase.auth().onIdTokenChanged((user) => {
-    if (!user || !user.email.endsWith('@bearstudio.fr')) {
+    if (!user) {
       setIsLogged(false);
     } else {
       setIsLogged(true);

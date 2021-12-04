@@ -66,6 +66,7 @@ export const ThankGroup: React.FC<ThankGroupProps> = ({
 
   return (
     <Stack
+      data-testid="ThankGroup"
       bg={colorModeValue('gray.300', 'gray.700')}
       p={3}
       borderRadius="md"
@@ -85,21 +86,22 @@ export const ThankGroup: React.FC<ThankGroupProps> = ({
         />
       </Stack>
       {thanks?.length > 0 && (
-        <Wrap>
+        <Wrap key={thanks.length}>
           {thanks?.map((thank) => (
             <PersonTag
-              key={thank?.id}
+              key={thank!.id}
               onRemove={() => deleteThank(thank?.id)}
               isLoadingRemove={isLoadingDeleteThank}
             >
               <Stack direction="row">
                 <Avatar
+                  key={thank!.id}
                   src={thank.photoURL}
                   size="2xs"
                   name={thank.author}
                   mr={2}
                 />
-                <Text>{thank.author}</Text>
+                <Text key={thank!.id}>{thank.author}</Text>
                 {Date.now() / 1000 - thank?.timestamp < NEW_BADGE_DURATION && (
                   <Badge
                     bg={colorModeValue('gray.500', 'gray.700')}

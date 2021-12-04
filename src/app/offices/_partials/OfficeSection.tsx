@@ -61,9 +61,10 @@ export const OfficeSection: React.FC<OfficeSectionProps> = ({
                 }
               >
                 <Avatar
+                  data-testid={`avatarUrl-${person?.photoUrl}`}
                   style={{ marginRight: '5px' }}
                   size="2xs"
-                  name={person?.photoUrl}
+                  name={person?.name}
                   src={person?.photoUrl}
                 />
                 {person?.name}

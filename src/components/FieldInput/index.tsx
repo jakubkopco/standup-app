@@ -71,6 +71,7 @@ export const FieldInput = forwardRef((props: FieldInputProps, ref) => {
           ref={ref}
           type={showPassword ? 'text' : type || 'text'}
           id={id}
+          data-testid={placeholder}
           value={value ?? ''}
           onChange={(e) => setValue(e.target.value)}
           onBlur={() => setIsTouched(true)}

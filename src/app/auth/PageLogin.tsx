@@ -69,6 +69,7 @@ export const PageLogin = () => {
                 size="sm"
                 width="fit-content"
                 alignSelf="center"
+                aria-label="button-login"
               >
                 Se connecter avec Google
               </Button>

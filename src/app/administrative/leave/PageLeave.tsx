@@ -82,6 +82,7 @@ export const PageLeave = () => {
           <Stack spacing={3}>
             <Stack direction="row">
               <FieldInput
+                placeholder={'lastName'}
                 name={LEAVE_FORM_ENTRIES_LAST_NAME}
                 label="Nom"
                 required="Le nom est requis"
@@ -91,6 +92,7 @@ export const PageLeave = () => {
                 }
               />
               <FieldInput
+                placeholder={'firstName'}
                 name={LEAVE_FORM_ENTRIES_FIRST_NAME}
                 label="Prénom"
                 required="Le prénom est requis"

@@ -18,7 +18,7 @@ test('Should render PageLogin', async () => {
   expect(button).toBeInTheDocument();
   fireEvent.click(button);
   expect(
-    screen.getByRole('button', { name: 'Passer en mode sombre' })
-  ).not.toBeInTheDocument();
+    screen.getByRole('button', { name: 'Passer en mode lumineux' })
+  ).toBeInTheDocument();
   expect(screen.queryAllByRole('button')).toHaveLength(2);
 });
